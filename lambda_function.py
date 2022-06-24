@@ -212,37 +212,39 @@ def recommend_portfolio(intent_request):
         # Validate the retirement age based on the user's current age.
        # An retirement age of 65 years is considered by default.
         if age is not None:
-            age = parse_int(
-               age
-           )  # Since parameters are strings it's important to cast values
+            age = parse_int(age)  # Since parameters are strings it's important to cast values
             if age < 0:
                 return build_validation_result(
                    False,
-                   "age",
+                   age,
                    "Your age is invalid, can you provide an age greater than zero?",
                )
             elif age >= 65:
                 return build_validation_result(
                    False,
-                   "age",
+                   age,
                    "The maximum age to contract this service is 64, "
                    "can you provide an age between 0 and 64 please?",
                )
-           
+        
+        
         # Validate user's investment amount
         if investment_amount is None:
             return build_validation_result(
                     False,
-                    "investment_amount",
+                    investment_amount,
                     "please enter desired investment amount to continue this service.",
                 )
         if int(investment_amount) < 5000:
             return build_validation_result(
                     False,
-                    "investment_amount",
+                    investment_amount,
                     "Please enter an amount greater than 5000 to see results.",
                 )
-    
+        
+        # A True results is returned if age or amount are valid
+        return build_validation_result(True, None, None)
+        
 ### Intents Dispatcher ###
 def dispatch(intent_request):
     """
