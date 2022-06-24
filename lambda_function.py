@@ -211,12 +211,15 @@ def recommend_portfolio(intent_request):
         """    
         # Validate user's age
         if age is None:
+            age = parse_int(
+            age
+        )  # Since parameters are strings it's important to cast values
             return build_validation_result(
                 False,
                 "age",
                 "You must provide your age to continue this service.",
                 )
-        if age <= 0 or age > 65:
+        if int(age) <= 0 or int(age) > 65:
             return build_validation_result(
                 False,
                 "age",
@@ -230,7 +233,7 @@ def recommend_portfolio(intent_request):
                     "investment_amount",
                     "please enter desired investment amount to continue this service.",
                 )
-        if investment_amount < 5000:
+        if int(investment_amount) < 5000:
             return build_validation_result(
                     False,
                     "investment_amount",
