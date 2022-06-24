@@ -209,23 +209,26 @@ def recommend_portfolio(intent_request):
         """
         Validates the data provided by the user.
         """    
-        # Validate user's age
-        if age is None:
+        # Validate the retirement age based on the user's current age.
+       # An retirement age of 65 years is considered by default.
+        if age is not None:
             age = parse_int(
-            age
-        )  # Since parameters are strings it's important to cast values
-            return build_validation_result(
-                False,
-                "age",
-                "You must provide your age to continue this service.",
-                )
-        if int(age) <= 0 or int(age) > 65:
-            return build_validation_result(
-                False,
-                "age",
-                "You must be older than 0 and younger than 65 to achieve best investment results",
-                "Please provide a different age.",
-                )
+               age
+           )  # Since parameters are strings it's important to cast values
+            if age < 0:
+                return build_validation_result(
+                   False,
+                   "age",
+                   "Your age is invalid, can you provide an age greater than zero?",
+               )
+            elif age >= 65:
+                return build_validation_result(
+                   False,
+                   "age",
+                   "The maximum age to contract this service is 64, "
+                   "can you provide an age between 0 and 64 please?",
+               )
+           
         # Validate user's investment amount
         if investment_amount is None:
             return build_validation_result(
